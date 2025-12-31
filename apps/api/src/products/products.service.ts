@@ -13,7 +13,6 @@ export class ProductsService {
 
     const where: any = {}
 
-    // search by name/brand/sku
     if (q.search) {
       where.OR = [
         { name: { contains: q.search, mode: 'insensitive' } },
@@ -30,7 +29,6 @@ export class ProductsService {
       where.category = { name: { equals: q.category, mode: 'insensitive' } }
     }
 
-    // price in dollars -> convert to cents in DB
     if (q.minPrice != null || q.maxPrice != null) {
       where.priceCents = {}
       if (q.minPrice != null) where.priceCents.gte = Math.round(q.minPrice * 100)
@@ -54,7 +52,7 @@ export class ProductsService {
       total,
       items: items.map(p => ({
         ...p,
-        price: Number((p.priceCents / 100).toFixed(2)), // удобно для UI
+        price: Number((p.priceCents / 100).toFixed(2)),
       })),
     }
   }
