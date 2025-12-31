@@ -27,13 +27,10 @@ export class ProductsService {
     }
 
     if (q.category) {
-      // filter by category name
-      where.category = {
-        name: { equals: q.category, mode: 'insensitive' },
-      }
+      where.category = { name: { equals: q.category, mode: 'insensitive' } }
     }
 
-    // prices come as dollars in query -> convert to cents
+    // price in dollars -> convert to cents in DB
     if (q.minPrice != null || q.maxPrice != null) {
       where.priceCents = {}
       if (q.minPrice != null) where.priceCents.gte = Math.round(q.minPrice * 100)
@@ -57,7 +54,7 @@ export class ProductsService {
       total,
       items: items.map(p => ({
         ...p,
-        price: Number((p.priceCents / 100).toFixed(2)),
+        price: Number((p.priceCents / 100).toFixed(2)), // удобно для UI
       })),
     }
   }
