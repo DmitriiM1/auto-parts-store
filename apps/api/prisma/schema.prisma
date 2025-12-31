@@ -10,8 +10,8 @@ generator client {
 
 datasource db {
   provider  = "postgresql"
-  url       = env("DATABASE_URL")   // на Render будет prisma://... (Accelerate)
-  directUrl = env("DIRECT_URL")     // локально может быть postgres://... (direct)
+  url       = env("DATABASE_URL")   // prisma://... accelerate
+  directUrl = env("DIRECT_URL")     // postgres://... direct
 }
 
 model Category {
