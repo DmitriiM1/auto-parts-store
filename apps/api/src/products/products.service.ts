@@ -36,14 +36,14 @@ export class ProductsService {
     }
 
     const [items, total] = await Promise.all([
-      this.prisma.product.findMany({
+      this.prisma.client.product.findMany({
         where,
         include: { category: true },
         orderBy: { createdAt: 'desc' },
         skip,
         take: pageSize,
       }),
-      this.prisma.product.count({ where }),
+      this.prisma.client.product.count({ where }),
     ])
 
     return {
@@ -58,7 +58,7 @@ export class ProductsService {
   }
 
   async getById(id: string) {
-    const product = await this.prisma.product.findUnique({
+    const product = await this.prisma.client.product.findUnique({
       where: { id },
       include: { category: true },
     })

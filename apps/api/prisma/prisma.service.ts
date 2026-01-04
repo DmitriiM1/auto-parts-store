@@ -1,20 +1,28 @@
-import { Injectable, OnModuleInit, OnModuleDestroy } from '@nestjs/common'
+import { Injectable } from '@nestjs/common'
 import { PrismaClient } from '@prisma/client'
 import { withAccelerate } from '@prisma/extension-accelerate'
 
 @Injectable()
-export class PrismaService implements OnModuleInit, OnModuleDestroy {
+export class PrismaService {
   private readonly _client = new PrismaClient().$extends(withAccelerate())
 
   get client() {
     return this._client
   }
 
-  async onModuleInit() {
-    await this._client.$connect()
+  get product() {
+    return this._client.product
   }
 
-  async onModuleDestroy() {
-    await this._client.$disconnect()
+  get category() {
+    return this._client.category
+  }
+
+  get order() {
+    return this._client.order
+  }
+
+  get orderItem() {
+    return this._client.orderItem
   }
 }
