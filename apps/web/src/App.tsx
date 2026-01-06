@@ -5,7 +5,7 @@ import ProductsPage from './pages/ProductsPage'
 
 export default function App() {
   return (
-    <div className="min-h-dvh bg-white text-black">
+    <div>
       <Navbar />
       <Routes>
         <Route path="/" element={<HomePage />} />
