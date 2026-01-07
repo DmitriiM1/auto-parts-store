@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import Container from '../components/Container'
 import { listProducts } from '../features/products/api'
 import type { Product } from '../features/products/types'
+import ProductCard from '../features/products/ProductCard'
 
 export default function ProductsPage() {
   const [items, setItems] = useState<Product[]>([])
@@ -34,14 +35,7 @@ export default function ProductsPage() {
         {!loading && !error && items.length > 0 && (
           <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {items.map(p => (
-              <div key={p.id} className="rounded-xl border bg-white p-4 shadow-sm">
-                <div className="text-sm text-gray-500">{p.brand}</div>
-                <div className="mt-1 font-semibold">{p.name}</div>
-                <div className="mt-1 text-sm text-gray-600">SKU: {p.sku}</div>
-                <div className="mt-3 font-semibold">
-                  ${typeof p.price === 'number' ? p.price.toFixed(2) : (p.priceCents / 100).toFixed(2)}
-                </div>
-              </div>
+              <ProductCard key={p.id} product={p} />
             ))}
           </div>
         )}
