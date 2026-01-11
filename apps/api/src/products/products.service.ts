@@ -1,10 +1,13 @@
 import { Injectable, NotFoundException } from '@nestjs/common'
 import { PrismaService } from '../prisma/prisma.service'
 import { ListProductsQueryDto } from './dto/list-products.query'
+import type { Product, Category } from '@prisma/client'
+
+type ProductWithCategory = Product & { category: Category }
 
 @Injectable()
 export class ProductsService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(private readonly prisma: PrismaService) { }
 
   async list(q: ListProductsQueryDto) {
     const page = q.page ?? 1
@@ -35,7 +38,7 @@ export class ProductsService {
       if (q.maxPrice != null) where.priceCents.lte = Math.round(q.maxPrice * 100)
     }
 
-    const [items, total] = await Promise.all([
+    const [rawItems, total] = await Promise.all([
       this.prisma.client.product.findMany({
         where,
         include: { category: true },
@@ -46,12 +49,21 @@ export class ProductsService {
       this.prisma.client.product.count({ where }),
     ])
 
+    const items = rawItems as unknown as ProductWithCategory[]
+
     return {
       page,
       pageSize,
       total,
       items: items.map(p => ({
-        ...p,
+        id: p.id,
+        name: p.name,
+        brand: p.brand,
+        sku: p.sku,
+        stock: p.stock,
+        imageUrl: p.imageUrl,
+        categoryId: p.categoryId,
+        categoryName: p.category.name,
         price: Number((p.priceCents / 100).toFixed(2)),
       })),
     }

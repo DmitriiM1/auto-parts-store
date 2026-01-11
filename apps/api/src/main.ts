@@ -10,12 +10,14 @@ async function bootstrap() {
     origin: true,
     credentials: true,
   });
-  app.useGlobalPipes(new ValidationPipe(
-    {
-      whitelist: true,
-      transform: true,
-    }
-  ));
+app.useGlobalPipes(
+  new ValidationPipe({
+    whitelist: true,
+    forbidNonWhitelisted: true,
+    transform: true,
+    transformOptions: { enableImplicitConversion: true },
+  }),
+)
 
   const port = process.env.PORT ? Number(process.env.PORT) : 3000
 

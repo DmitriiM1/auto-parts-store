@@ -1,46 +1,75 @@
-import { Transform } from 'class-transformer'
-import { IsInt, IsOptional, IsString, Min } from 'class-validator'
 import { ApiPropertyOptional } from '@nestjs/swagger'
+import {
+  IsInt,
+  IsNumber,
+  IsOptional,
+  IsString,
+  Min,
+} from 'class-validator'
+import { Type } from 'class-transformer'
 
 export class ListProductsQueryDto {
-  @ApiPropertyOptional({ example: 'bosch', description: 'Search by name, brand or SKU' })
+  @ApiPropertyOptional({
+    description: 'Search by name, brand or SKU',
+    example: 'brake',
+  })
   @IsOptional()
   @IsString()
   search?: string
 
-  @ApiPropertyOptional({ example: 'Brakes', description: 'Category name' })
+  @ApiPropertyOptional({
+    description: 'Category name',
+    example: 'Brakes',
+  })
   @IsOptional()
   @IsString()
   category?: string
 
-  @ApiPropertyOptional({ example: 'Bosch', description: 'Brand name' })
+  @ApiPropertyOptional({
+    description: 'Brand name',
+    example: 'Brembo',
+  })
   @IsOptional()
   @IsString()
   brand?: string
 
-  @ApiPropertyOptional({ example: 10, description: 'Min price in dollars' })
+  @ApiPropertyOptional({
+    description: 'Min price in dollars',
+    example: 20,
+  })
   @IsOptional()
-  @Transform(({ value }) => (value === '' || value == null ? undefined : Number(value)))
+  @Type(() => Number)
+  @IsNumber()
   @Min(0)
   minPrice?: number
 
-  @ApiPropertyOptional({ example: 200, description: 'Max price in dollars' })
+  @ApiPropertyOptional({
+    description: 'Max price in dollars',
+    example: 200,
+  })
   @IsOptional()
-  @Transform(({ value }) => (value === '' || value == null ? undefined : Number(value)))
+  @Type(() => Number)
+  @IsNumber()
   @Min(0)
   maxPrice?: number
 
-  @ApiPropertyOptional({ example: 1, description: 'Page number (starts from 1)' })
+  @ApiPropertyOptional({
+    description: 'Page number (starts from 1)',
+    default: 1,
+  })
   @IsOptional()
-  @Transform(({ value }) => (value == null ? 1 : Number(value)))
+  @Type(() => Number)
   @IsInt()
   @Min(1)
-  page: number = 1
+  page?: number
 
-  @ApiPropertyOptional({ example: 12, description: 'Items per page' })
+  @ApiPropertyOptional({
+    description: 'Items per page',
+    default: 12,
+  })
   @IsOptional()
-  @Transform(({ value }) => (value == null ? 12 : Number(value)))
+  @Type(() => Number)
   @IsInt()
   @Min(1)
-  pageSize: number = 12
+  pageSize?: number
 }
