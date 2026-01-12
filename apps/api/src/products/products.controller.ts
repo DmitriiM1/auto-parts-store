@@ -1,8 +1,8 @@
 import { Controller, Get, Param, Query } from '@nestjs/common'
 import { ProductsService } from './products.service'
 import { ListProductsQueryDto } from './dto/list-products.query'
-import { ApiOkResponse, ApiTags, ApiQuery } from '@nestjs/swagger'
-import { PaginatedProductsDto } from './dto/product.dto'
+import { ApiOkResponse, ApiTags, ApiQuery, ApiNotFoundResponse } from '@nestjs/swagger'
+import { PaginatedProductsDto, ProductDto } from './dto/product.dto'
 
 @ApiTags('products')
 @Controller('products')
@@ -18,18 +18,21 @@ export class ProductsController {
     @ApiQuery({ name: 'page', required: false, type: Number })
     @ApiQuery({ name: 'pageSize', required: false, type: Number })
 
-    @Get()
+    
     @ApiOkResponse({
         description: 'List of products',
         type: PaginatedProductsDto,
     })
-    async list(
-        @Query() query: ListProductsQueryDto,
-    ): Promise<PaginatedProductsDto> {
+    @Get()
+    list(@Query() query: ListProductsQueryDto) {
         return this.productsService.list(query)
     }
 
-    @ApiOkResponse({ description: 'Get product by ID' })
+    @ApiOkResponse({
+        description: 'Get product by ID',
+        type: ProductDto,
+    })
+    @ApiNotFoundResponse({ description: 'Product not found' })
     @Get(':id')
     getOne(@Param('id') id: string) {
         return this.productsService.getById(id)

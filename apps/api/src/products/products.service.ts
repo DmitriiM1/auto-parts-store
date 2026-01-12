@@ -75,10 +75,19 @@ export class ProductsService {
       include: { category: true },
     })
 
-    if (!product) throw new NotFoundException('Product not found')
+    if (!product) {
+      throw new NotFoundException('Product not found')
+    }
 
     return {
-      ...product,
+      id: product.id,
+      name: product.name,
+      brand: product.brand,
+      sku: product.sku,
+      stock: product.stock,
+      imageUrl: product.imageUrl,
+      categoryId: product.categoryId,
+      categoryName: product.category.name,
       price: Number((product.priceCents / 100).toFixed(2)),
     }
   }
