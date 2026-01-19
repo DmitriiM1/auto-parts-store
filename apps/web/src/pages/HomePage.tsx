@@ -6,9 +6,9 @@ export default function HomePage() {
     <main>
       <section className="bg-gradient-to-b from-gray-50 to-white py-14">
         <Container>
-          <div className="grid gap-10 md:grid-cols-2 md:items-center">
+          <div className="grid p-3 gap-10 md:grid-cols-2 md:items-center">
             <div>
-              <p className="inline-flex items-center rounded-full border bg-white px-3 py-1 text-xs text-gray-600">
+              <p className="inline-flex rounded-full border bg-white px-3 text-2xl text-gray-600">
                 Fast search • Clean UI • Real backend
               </p>
 

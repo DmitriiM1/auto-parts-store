@@ -14,10 +14,13 @@ export default function Navbar() {
                         <span>Auto Parts Store</span>
                     </Link>
 
-                    <button className="rounded-xl bg-black px-4 py-2 text-sm font-semibold text-white hover:opacity-90">
-                        Sign in
-                    </button>
-
+                    <Link
+                        to="/signin"
+                        className="rounded-xl bg-black px-5 py-2 text-sm font-semibold text-white hover:opacity-60"
+                    >
+                        Sign In
+                    </Link>
+        
                 </div>
 
                 <nav className="flex h-22 items-center justify-center gap-20">
