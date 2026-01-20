@@ -13,9 +13,8 @@ export default function SignInPage() {
 
   return (
     <Container>
-      <div className="py-8 max-w-md mx-auto"></div>
-        <h1 className="text-2xl font-semibold mb-6">Sign In</h1>
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <h1 className="text-2xl font-semibold mb-6 ml-6">Let's sign in right now</h1>
+        <form onSubmit={handleSubmit} className="space-y-4 flex flex-col items-center">
             <div>
                 <label className="block text-sm font-medium mb-1" htmlFor="email">Email</label>
                 <input
@@ -23,7 +22,7 @@ export default function SignInPage() {
                     id="email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    className="w-full rounded-lg border border-gray-300 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-black"
+                    className="w-m rounded-lg border border-gray-300 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-black"
                 />
             </div>
             <div>
@@ -33,12 +32,12 @@ export default function SignInPage() {
                     id="password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    className="w-full rounded-lg border border-gray-300 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-black"
+                    className="w-m rounded-lg border border-gray-300 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-black"
                 />
             </div>
             <button
                 type="submit"
-                className="w-full rounded-lg bg-black text-white px-4 py-2 font-semibold hover:opacity-90"
+                className="rounded-lg bg-black text-white px-4 py-2 font-semibold hover:opacity-90"
             >
                 Sign In
             </button>
