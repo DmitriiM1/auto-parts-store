@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import Container from '../components/Container'
+import PartsShowcase from '../components/home/PartsShowcase'
 
 export default function HomePage() {
   return (
@@ -20,7 +21,7 @@ export default function HomePage() {
                 Search products by brand, category, and price. Powered by a NestJS + Prisma backend.
               </p>
 
-              <div className="mt-6 flex flex-wrap gap-3">
+              <div className="mt-6 flex flex-wrap gap-6 items-center justify-center">
                 <Link
                   to="/products"
                   className="rounded-xl bg-black px-5 py-3 text-sm font-semibold text-white hover:opacity-90"
@@ -39,17 +40,20 @@ export default function HomePage() {
               </div>
             </div>
 
-            <div className="rounded-2xl border bg-white p-6 shadow-sm">
-              <h2 className="text-lg font-semibold">What you can do</h2>
-              <ul className="mt-4 space-y-3 text-sm text-gray-600">
-                <li className="flex gap-2"><span className="text-black">•</span> Filter by price range</li>
-                <li className="flex gap-2"><span className="text-black">•</span> Search by name / SKU</li>
-                <li className="flex gap-2"><span className="text-black">•</span> Categories & brands</li>
-                <li className="flex gap-2"><span className="text-black">•</span> Product details page (next)</li>
+            <div className="rounded-3xl border bg-white p-6 shadow-sm">
+              <h2 className="text-lg font-semibold">What we are offering:</h2>
+              <ul className="mt-4 space-y-3 text-lg text-gray-900">
+                <li className="flex gap-2"><span className="text-black">•</span> Genuine and high-quality aftermarket parts</li>
+                <li className="flex gap-2"><span className="text-black">•</span> Competitive pricing</li>
+                <li className="flex gap-2"><span className="text-black">•</span> Fast delivery across Toronto & GTA</li>
+                <li className="flex gap-2"><span className="text-black">•</span> Parts sourcing for all makes and models</li>
+                <li className="flex gap-2"><span className="text-black">•</span> OEM / aftermarket options</li>
+                <li className="flex gap-2"><span className="text-black">•</span> Helpful support with part selection</li>
               </ul>
             </div>
           </div>
         </Container>
+        <PartsShowcase />
       </section>
     </main>
   )
