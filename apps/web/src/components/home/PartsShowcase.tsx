@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion'
+import { motion, type Variants} from 'framer-motion'
 import './PartsShowcase.css'
 
 const partImages = [
@@ -24,12 +24,17 @@ const partImages = [
   },
 ]
 
-const textItem = {
+const textItem: Variants = {
   hidden: { opacity: 0, x: 40 },
   visible: (i: number) => ({
     opacity: 1,
     x: 0,
-    transition: { delay: 0.15 * i, duration: 0.5, ease: 'easeOut' },
+    transition: {
+      delay: 0.15 * i,
+      duration: 0.5,
+      // можно указать кастомный easing как массив, если хочется:
+      // ease: [0.16, 1, 0.3, 1],
+    },
   }),
 }
 

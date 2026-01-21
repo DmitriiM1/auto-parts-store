@@ -14,7 +14,7 @@ export type Product = {
   category?: Category
   createdAt: string
   updatedAt: string
-  price?: number
+  price: number
   priceCents: number
 }
 

@@ -32,7 +32,7 @@ export default function HomePage() {
                 <a
                   href="https://auto-parts-store-fa9b.onrender.com/docs"
                   target="_blank"
-                  rel="noreferrer"
+                  rel="noreferrer noopener"
                   className="rounded-xl border px-5 py-3 text-sm font-semibold text-black hover:bg-gray-50"
                 >
                   View API docs

@@ -112,10 +112,11 @@ export default function ProductsPage() {
             </div>
 
             <div>
-              <label className="block text-xs font-medium text-gray-600 uppercase tracking-wide">
+              <label htmlFor='brand' className="block text-xs font-medium text-gray-600 uppercase tracking-wide">
                 Brand
               </label>
               <select
+                id='brand'
                 value={filters.brand}
                 onChange={e => setFilters(prev => ({ ...prev, brand: e.target.value }))}
                 className="mt-1 w-full h-9 rounded-md border border-gray-300 bg-white px-4 py-2 text-sm shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
@@ -130,10 +131,11 @@ export default function ProductsPage() {
             </div>
 
             <div>
-              <label className="block text-xs font-medium text-gray-600 uppercase tracking-wide">
+              <label htmlFor='category' className="block text-xs font-medium text-gray-600 uppercase tracking-wide">
                 Category
               </label>
               <select
+                id='category'
                 value={filters.category}
                 onChange={e => setFilters(prev => ({ ...prev, category: e.target.value }))}
                 className="mt-1 w-full h-9 rounded-md border border-gray-300 bg-white px-4 py-2 text-sm shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
@@ -151,10 +153,11 @@ export default function ProductsPage() {
           <div className="mt-4 grid gap-4 md:grid-cols-4 md:items-end">
             <div className="flex gap-3 md:col-span-2">
               <div className="flex-1">
-                <label className="block text-xs font-medium text-gray-600 uppercase tracking-wide">
+                <label htmlFor='minPrice' className="block text-xs font-medium text-gray-600 uppercase tracking-wide">
                   Min price, $
                 </label>
                 <input
+                  id='minPrice'
                   type="number"
                   min={0}
                   value={filters.minPrice}
@@ -163,10 +166,11 @@ export default function ProductsPage() {
                 />
               </div>
               <div className="flex-1">
-                <label className="block text-xs font-medium text-gray-600 uppercase tracking-wide">
+                <label htmlFor='maxPrice' className="block text-xs font-medium text-gray-600 uppercase tracking-wide">
                   Max price, $
                 </label>
                 <input
+                  id='maxPrice'
                   type="number"
                   min={0}
                   value={filters.maxPrice}
