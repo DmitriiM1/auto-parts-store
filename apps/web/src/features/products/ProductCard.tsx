@@ -1,4 +1,5 @@
 import type { Product } from './types'
+import { useState } from 'react'
 
 function formatPrice(p: Product) {
   const value = typeof p.price === 'number' ? p.price : p.priceCents / 100
@@ -6,14 +7,20 @@ function formatPrice(p: Product) {
 }
 
 export default function ProductCard({ product }: { product: Product }) {
-  const img = product.imageUrl?.trim()
+  const [error, setError] = useState(false)
+  const imgSrc = `/products/${product.sku}.jpg`
   const inStock = product.stock > 0
 
   return (
     <div className="rounded-2xl border bg-white shadow-sm overflow-hidden">
       <div className="aspect-[4/3] bg-gray-100 flex items-center justify-center">
-        {img ? (
-          <img src={img} alt={product.name} className="h-full w-full object-cover" />
+        {!error ? (
+          <img
+            src={imgSrc}
+            alt={product.name}
+            className="h-full w-full object-cover"
+            onError={() => setError(true)}
+          />
         ) : (
           <div className="text-gray-400 text-sm">No image</div>
         )}
