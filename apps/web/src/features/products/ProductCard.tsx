@@ -8,7 +8,7 @@ function formatPrice(p: Product) {
 
 export default function ProductCard({ product }: { product: Product }) {
   const [error, setError] = useState(false)
-  const imgSrc = `/products/${product.sku}.jpg`
+  const imgSrc = `/images/products/${product.sku}.jpeg`
   const inStock = product.stock > 0
 
   return (
@@ -34,9 +34,8 @@ export default function ProductCard({ product }: { product: Product }) {
         <div className="mt-3 flex items-center justify-between">
           <div className="font-semibold">{formatPrice(product)}</div>
           <span
-            className={`text-xs rounded-full px-2 py-1 ${
-              inStock ? 'bg-green-100 text-green-700' : 'bg-gray-100 text-gray-600'
-            }`}
+            className={`text-xs rounded-full px-2 py-1 ${inStock ? 'bg-green-100 text-green-700' : 'bg-gray-100 text-gray-600'
+              }`}
           >
             {inStock ? `In stock: ${product.stock}` : 'Out of stock'}
           </span>
