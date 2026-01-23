@@ -3,6 +3,7 @@ import { PrismaService } from '../prisma/prisma.service'
 import { ListProductsQueryDto } from './dto/list-products.query'
 import type { Product, Category } from '@prisma/client'
 import { CreateProductDto } from './dto/create-product.dto'
+import { UpdateProductDto } from './dto/update-product.dto'
 
 type ProductWithCategory = Product & { category: Category }
 
@@ -116,5 +117,61 @@ export class ProductsService {
     })
 
     return this.toProductDto(product as ProductWithCategory)
+  }
+
+    async update(id: string, dto: UpdateProductDto) {
+    if (dto.categoryId) {
+      const category = await this.prisma.client.category.findUnique({
+        where: { id: dto.categoryId },
+        select: { id: true },
+      })
+
+      if (!category) {
+        throw new BadRequestException('Invalid categoryId: category does not exist')
+      }
+    }
+
+    const data: any = { ...dto }
+
+    if (dto.price != null) {
+      data.priceCents = Math.round(dto.price * 100)
+      delete data.price
+    }
+
+    let product: ProductWithCategory | null = null
+
+    try {
+      const updated = await this.prisma.client.product.update({
+        where: { id },
+        data,
+        include: { category: true },
+      })
+
+      product = updated as ProductWithCategory
+    } catch (e: any) {
+      // P2025 — record not found
+      if (e?.code === 'P2025') {
+        throw new NotFoundException('Product not found')
+      }
+      throw e
+    }
+
+    return this.toProductDto(product)
+  }
+
+  // ---------- DELETE ----------
+  async remove(id: string) {
+    try {
+      await this.prisma.client.product.delete({
+        where: { id },
+      })
+    } catch (e: any) {
+      if (e?.code === 'P2025') {
+        throw new NotFoundException('Product not found')
+      }
+      throw e
+    }
+
+    return { success: true }
   }
 }
