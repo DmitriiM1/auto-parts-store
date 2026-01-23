@@ -1,8 +1,10 @@
-import { Controller, Get, Param, Query } from '@nestjs/common'
+import { Body, Post, UseGuards, Controller, Get, Param, Query } from '@nestjs/common'
 import { ProductsService } from './products.service'
 import { ListProductsQueryDto } from './dto/list-products.query'
 import { ApiOkResponse, ApiTags, ApiQuery, ApiNotFoundResponse } from '@nestjs/swagger'
 import { PaginatedProductsDto, ProductDto } from './dto/product.dto'
+import { AdminGuard } from '../auth/admin.guard'
+import { CreateProductDto } from './dto/create-product.dto'
 
 @ApiTags('products')
 @Controller('products')
@@ -36,6 +38,16 @@ export class ProductsController {
     @Get(':id')
     getOne(@Param('id') id: string) {
         return this.productsService.getById(id)
+    }
+
+    @Post()
+    @UseGuards(AdminGuard)
+    @ApiOkResponse({
+        description: 'Create a new product',
+        type: ProductDto,
+    })
+    create(@Body() body: CreateProductDto) {
+        return this.productsService.create(body)
     }
 
 

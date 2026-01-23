@@ -2,12 +2,27 @@ import { Injectable, NotFoundException } from '@nestjs/common'
 import { PrismaService } from '../prisma/prisma.service'
 import { ListProductsQueryDto } from './dto/list-products.query'
 import type { Product, Category } from '@prisma/client'
+import { CreateProductDto } from './dto/create-product.dto'
 
 type ProductWithCategory = Product & { category: Category }
 
 @Injectable()
 export class ProductsService {
-  constructor(private readonly prisma: PrismaService) { }
+  constructor(private readonly prisma: PrismaService) {}
+
+  private toProductDto(product: ProductWithCategory) {
+    return {
+      id: product.id,
+      name: product.name,
+      brand: product.brand,
+      sku: product.sku,
+      price: Number((product.priceCents / 100).toFixed(2)),
+      stock: product.stock,
+      imageUrl: product.imageUrl,
+      categoryId: product.categoryId,
+      categoryName: product.category.name,
+    }
+  }
 
   async list(q: ListProductsQueryDto) {
     const page = q.page ?? 1
@@ -55,17 +70,7 @@ export class ProductsService {
       page,
       pageSize,
       total,
-      items: items.map(p => ({
-        id: p.id,
-        name: p.name,
-        brand: p.brand,
-        sku: p.sku,
-        stock: p.stock,
-        imageUrl: p.imageUrl,
-        categoryId: p.categoryId,
-        categoryName: p.category.name,
-        price: Number((p.priceCents / 100).toFixed(2)),
-      })),
+      items: items.map(p => this.toProductDto(p)),
     }
   }
 
@@ -79,16 +84,27 @@ export class ProductsService {
       throw new NotFoundException('Product not found')
     }
 
-    return {
-      id: product.id,
-      name: product.name,
-      brand: product.brand,
-      sku: product.sku,
-      stock: product.stock,
-      imageUrl: product.imageUrl,
-      categoryId: product.categoryId,
-      categoryName: product.category.name,
-      price: Number((product.priceCents / 100).toFixed(2)),
-    }
+    return this.toProductDto(product as ProductWithCategory)
+  }
+
+  async create(dto: CreateProductDto) {
+    const priceCents = Math.round(dto.price * 100)
+
+    const product = await this.prisma.client.product.create({
+      data: {
+        name: dto.name,
+        brand: dto.brand,
+        sku: dto.sku,
+        priceCents,
+        stock: dto.stock,
+        imageUrl: dto.imageUrl,
+        categoryId: dto.categoryId,
+      },
+      include: {
+        category: true,
+      },
+    })
+
+    return this.toProductDto(product as ProductWithCategory)
   }
 }
