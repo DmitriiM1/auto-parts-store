@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common'
+import { Injectable, NotFoundException, BadRequestException } from '@nestjs/common'
 import { PrismaService } from '../prisma/prisma.service'
 import { ListProductsQueryDto } from './dto/list-products.query'
 import type { Product, Category } from '@prisma/client'
@@ -8,7 +8,7 @@ type ProductWithCategory = Product & { category: Category }
 
 @Injectable()
 export class ProductsService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(private readonly prisma: PrismaService) { }
 
   private toProductDto(product: ProductWithCategory) {
     return {
@@ -89,6 +89,16 @@ export class ProductsService {
 
   async create(dto: CreateProductDto) {
     const priceCents = Math.round(dto.price * 100)
+
+    const category = await this.prisma.client.category.findUnique({
+      where: { id: dto.categoryId },
+      select: { id: true, name: true },
+    })
+
+    if (!category) {
+      throw new BadRequestException('Invalid categoryId: category does not exist')
+    }
+
 
     const product = await this.prisma.client.product.create({
       data: {
