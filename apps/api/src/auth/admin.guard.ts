@@ -11,7 +11,6 @@ export class AdminGuard implements CanActivate {
     const req = context.switchToHttp().getRequest<Request>()
     const expected = process.env.ADMIN_TOKEN
 
-    // Если токен не задан – в dev можно пропускать всех
     if (!expected) {
       return true
     }
