@@ -76,7 +76,7 @@ export function AdminProductsPage() {
             name: product.name,
             brand: product.brand,
             sku: product.sku,
-            price: product.price.toString(),
+            price: (product.price ?? '').toString(),
             stock: product.stock.toString(),
             imageUrl: product.imageUrl ?? '',
             categoryId: product.categoryId,
@@ -92,8 +92,8 @@ export function AdminProductsPage() {
             name: form.name.trim(),
             brand: form.brand.trim(),
             sku: form.sku.trim(),
-            price: Number(form.price),
-            stock: Number(form.stock),
+            price: form.price === '' ? 0 : Number(form.price),
+            stock: form.stock === '' ? 0 : Number(form.stock),
             imageUrl: form.imageUrl.trim() || undefined,
             categoryId: form.categoryId.trim(),
         };
@@ -190,7 +190,7 @@ export function AdminProductsPage() {
                                                 {p.sku}
                                             </td>
                                             <td className="py-2 px-2 text-right">
-                                                ${p.price.toFixed(2)}
+                                                {typeof p.price === 'number' ? `$${p.price.toFixed(2)}` : '—'}
                                             </td>
                                             <td className="py-2 px-2 text-right">{p.stock}</td>
                                             <td className="py-2 px-2 text-slate-300">
@@ -288,7 +288,7 @@ export function AdminProductsPage() {
                                         Price, $ <span className="text-red-400">*</span>
                                     </label>
                                     <input
-                                        id='prod-price' 
+                                        id='prod-price'
                                         name="price"
                                         type="number"
                                         step="0.01"
@@ -334,8 +334,9 @@ export function AdminProductsPage() {
                             </div>
 
                             <div>
-                                <label className="block text-xs mb-1">Image URL</label>
+                                <label htmlFor="prod-imageUrl" className="block text-xs mb-1">Image URL</label>
                                 <input
+                                    id="prod-imageUrl"
                                     name="imageUrl"
                                     value={form.imageUrl}
                                     onChange={handleChange}
