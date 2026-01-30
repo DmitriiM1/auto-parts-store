@@ -1,22 +1,22 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import Container from '../components/Container'
+import { useAuth } from '../features/auth/AuthContext'
 
 export default function SignInPage() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const navigate = useNavigate()
+  const { signIn } = useAuth()
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
 
-    // TODO: replace with real auth API later
     if (!email.trim() || !password.trim()) return
 
-    localStorage.setItem('auth:v1', '1')
-    localStorage.setItem('authEmail:v1', email.trim())
+    signIn(email.trim())
 
-    navigate('/products')
+    navigate('/cart')
   }
 
   return (

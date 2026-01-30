@@ -3,15 +3,18 @@ import ReactDOM from 'react-dom/client'
 import { BrowserRouter } from 'react-router-dom'
 import App from './App'
 import { CartProvider } from './features/cart/CartContext'
+import { AuthProvider } from './features/auth/AuthContext'
 
 import './index.css'
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <CartProvider>
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
+    <AuthProvider>
+      <CartProvider>
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
     </CartProvider>
+    </AuthProvider>
   </React.StrictMode>,
 )

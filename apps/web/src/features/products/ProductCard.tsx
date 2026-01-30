@@ -1,6 +1,7 @@
 import type { Product } from './types'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { useAuth } from '../auth/AuthContext'
 import { useCart } from '../cart/CartContext'
 
 function formatPrice(p: Product) {
@@ -10,11 +11,12 @@ function formatPrice(p: Product) {
 
 
 export default function ProductCard({ product }: { product: Product }) {
-  const navigate = useNavigate()
+  const { isAuthed } = useAuth()
   const { addItem } = useCart()
   const [error, setError] = useState(false)
   const imgSrc = `/images/products/${product.sku}.jpeg`
   const inStock = product.stock > 0
+  const navigate = useNavigate()
 
   return (
     <div className="rounded-2xl border bg-white shadow-sm overflow-hidden">
@@ -45,14 +47,15 @@ export default function ProductCard({ product }: { product: Product }) {
             {inStock ? `In stock: ${product.stock}` : 'Out of stock'}
           </span>
         </div>
+        
         <button
           onClick={() => {
-            const authed = localStorage.getItem('auth:v1') === '1'
-            if (!authed) {
+            if (!isAuthed) {
               alert('Please sign in to add items to your cart.')
               navigate('/signin')
               return
             }
+
             addItem({
               productId: product.id,
               name: product.name,
@@ -60,7 +63,10 @@ export default function ProductCard({ product }: { product: Product }) {
               imageUrl: product.imageUrl,
             })
           }}
-          className="mt-3 rounded-lg bg-black text-white px-4 py-2 text-sm hover:opacity-80"
+          disabled={!inStock}
+          className={`mt-3 rounded-lg px-4 py-2 text-sm text-white hover:opacity-80 ${
+            inStock ? 'bg-black' : 'bg-gray-400 cursor-not-allowed'
+          }`}
         >
           Add to cart
         </button>
