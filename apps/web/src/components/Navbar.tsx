@@ -2,6 +2,8 @@ import { Link, NavLink } from 'react-router-dom'
 import Container from './Container'
 import '../index.css'
 
+const adminToken = import.meta.env.VITE_ADMIN_TOKEN;
+
 export default function Navbar() {
     return (
         <header className="">
@@ -46,6 +48,21 @@ export default function Navbar() {
                     >
                         Products
                     </NavLink>
+
+                    
+                    {adminToken && (
+                        <NavLink
+                            to="/admin/products"
+                            className={({ isActive }) =>
+                                `text-sm px-3 py-2 rounded-md transition-colors ${isActive
+                                    ? 'font-semibold text-black bg-blue-400'
+                                    : 'text-gray-600 hover:text-black hover:bg-blue-400'
+                                }`
+                            }
+                        >
+                            Admin Products
+                        </NavLink>
+                    )}
 
                 </nav>
             </Container>
