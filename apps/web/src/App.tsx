@@ -4,6 +4,7 @@ import HomePage from './pages/HomePage'
 import ProductsPage from './pages/ProductsPage'
 import SignInPage from './pages/SignInPage'
 import { AdminProductsPage } from './pages/AdminProductsPage'
+import CartPage from './pages/CartPage'
 
 export default function App() {
   return (
@@ -14,6 +15,7 @@ export default function App() {
         <Route path="/products" element={<ProductsPage />} />
         <Route path="/signin" element={<SignInPage />} />
         <Route path="/admin/products" element={<AdminProductsPage />} />
+        <Route path="/cart" element={<CartPage />} />
       </Routes>
     </div>
   )

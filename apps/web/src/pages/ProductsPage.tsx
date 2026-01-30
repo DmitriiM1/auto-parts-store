@@ -38,8 +38,6 @@ export default function ProductsPage() {
   const categories = useMemo(() => {
     const set = new Set<string>()
     for (const p of items) {
-      // categoryName is provided by the API DTO
-      // if it is missing for some reason, fallback to "Other"
       const name = (p as any).categoryName ?? 'Other'
       set.add(name)
     }

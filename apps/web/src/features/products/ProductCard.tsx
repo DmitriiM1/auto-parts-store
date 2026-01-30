@@ -1,10 +1,13 @@
 import type { Product } from './types'
 import { useState } from 'react'
+import { useCart } from '../cart/CartContext'
 
 function formatPrice(p: Product) {
   const value = typeof p.price === 'number' ? p.price : p.priceCents / 100
   return `$${value.toFixed(2)}`
 }
+
+const { addItem } = useCart()
 
 export default function ProductCard({ product }: { product: Product }) {
   const [error, setError] = useState(false)
@@ -40,6 +43,19 @@ export default function ProductCard({ product }: { product: Product }) {
             {inStock ? `In stock: ${product.stock}` : 'Out of stock'}
           </span>
         </div>
+        <button
+          onClick={() =>
+            addItem({
+              productId: product.id,
+              name: product.name,
+              price: product.price ?? 0,
+              imageUrl: product.imageUrl,
+            })
+          }
+          className="mt-3 rounded-lg bg-black text-white px-4 py-2 text-sm hover:opacity-80"
+        >
+          Add to cart
+        </button>
       </div>
     </div>
   )
