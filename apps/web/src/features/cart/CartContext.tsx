@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useEffect, useMemo, useState } from 'react'
 import type { CartItem, CartState } from './types'
-import { loadCart, saveCart, clearCart } from './storage'
+import { loadCart, saveCart } from './storage'
 
 type CartContextValue = {
   items: CartItem[]
