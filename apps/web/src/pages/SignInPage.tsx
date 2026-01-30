@@ -1,47 +1,62 @@
-import {useState} from 'react';
-import Container from '../components/Container';
+import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import Container from '../components/Container'
 
 export default function SignInPage() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const navigate = useNavigate()
 
   const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    // Handle sign-in logic here
-    console.log('Signing in with', { email, password });
-  };
+    e.preventDefault()
+
+    // TODO: replace with real auth API later
+    if (!email.trim() || !password.trim()) return
+
+    localStorage.setItem('auth:v1', '1')
+    localStorage.setItem('authEmail:v1', email.trim())
+
+    navigate('/products')
+  }
 
   return (
     <Container>
-        <h1 className="text-2xl font-semibold mb-6 ml-6">Let's sign in right now</h1>
-        <form onSubmit={handleSubmit} className="space-y-4 flex flex-col items-center">
-            <div>
-                <label className="block text-sm font-medium mb-1" htmlFor="email">Email</label>
-                <input
-                    type="email"
-                    id="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    className="w-m rounded-lg border border-gray-300 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-black"
-                />
-            </div>
-            <div>
-                <label className="block text-sm font-medium mb-1" htmlFor="password">Password</label>
-                <input
-                    type="password"
-                    id="password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    className="w-m rounded-lg border border-gray-300 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-black"
-                />
-            </div>
-            <button
-                type="submit"
-                className="rounded-lg bg-black text-white px-4 py-2 font-semibold hover:opacity-90"
-            >
-                Sign In
-            </button>
-        </form>
+      <h1 className="text-2xl font-semibold mb-6 ml-6">Let's sign in right now</h1>
+
+      <form onSubmit={handleSubmit} className="space-y-4 flex flex-col items-center">
+        <div>
+          <label className="block text-sm font-medium mb-1" htmlFor="email">
+            Email
+          </label>
+          <input
+            type="email"
+            id="email"
+            value={email}
+            onChange={e => setEmail(e.target.value)}
+            className="w-m rounded-lg border border-gray-300 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-black"
+          />
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium mb-1" htmlFor="password">
+            Password
+          </label>
+          <input
+            type="password"
+            id="password"
+            value={password}
+            onChange={e => setPassword(e.target.value)}
+            className="w-m rounded-lg border border-gray-300 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-black"
+          />
+        </div>
+
+        <button
+          type="submit"
+          className="rounded-lg bg-black text-white px-4 py-2 font-semibold hover:opacity-90"
+        >
+          Sign In
+        </button>
+      </form>
     </Container>
-  );
+  )
 }

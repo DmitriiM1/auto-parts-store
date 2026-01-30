@@ -2,8 +2,17 @@ import { Link, NavLink } from 'react-router-dom'
 import Container from './Container'
 import { useCart } from '../features/cart/CartContext';
 import '../index.css'
+import { useState, useEffect } from 'react';
 
 const adminToken = import.meta.env.VITE_ADMIN_TOKEN;
+const [isAuthed, setIsAuthed] = useState(false)
+
+useEffect(() => {
+  const read = () => setIsAuthed(localStorage.getItem('auth:v1') === '1')
+  read()
+  window.addEventListener('storage', read)
+  return () => window.removeEventListener('storage', read)
+}, [])
 
 export default function Navbar() {
     const { count } = useCart()
@@ -66,6 +75,7 @@ export default function Navbar() {
                         </NavLink>
                     )}
 
+                    {isAuthed && (
                     <NavLink to="/cart" className={({ isActive }) =>
                         `text-sm px-3 py-2 rounded-md transition-colors ${isActive
                             ? 'font-semibold text-black bg-blue-400'
@@ -74,6 +84,7 @@ export default function Navbar() {
                     }>
                         Cart {count > 0 && <span className="ml-2 rounded-full bg-black text-white px-2 py-0.5 text-xs">{count}</span>}
                     </NavLink>
+                    )}
 
                 </nav>
             </Container>

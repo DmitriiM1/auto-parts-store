@@ -1,5 +1,6 @@
 import type { Product } from './types'
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { useCart } from '../cart/CartContext'
 
 function formatPrice(p: Product) {
@@ -9,6 +10,7 @@ function formatPrice(p: Product) {
 
 
 export default function ProductCard({ product }: { product: Product }) {
+  const navigate = useNavigate()
   const { addItem } = useCart()
   const [error, setError] = useState(false)
   const imgSrc = `/images/products/${product.sku}.jpeg`
@@ -44,14 +46,20 @@ export default function ProductCard({ product }: { product: Product }) {
           </span>
         </div>
         <button
-          onClick={() =>
+          onClick={() => {
+            const authed = localStorage.getItem('auth:v1') === '1'
+            if (!authed) {
+              alert('Please sign in to add items to your cart.')
+              navigate('/signin')
+              return
+            }
             addItem({
               productId: product.id,
               name: product.name,
               price: product.price ?? 0,
               imageUrl: product.imageUrl,
             })
-          }
+          }}
           className="mt-3 rounded-lg bg-black text-white px-4 py-2 text-sm hover:opacity-80"
         >
           Add to cart
