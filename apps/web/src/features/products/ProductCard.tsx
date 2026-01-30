@@ -7,9 +7,9 @@ function formatPrice(p: Product) {
   return `$${value.toFixed(2)}`
 }
 
-const { addItem } = useCart()
 
 export default function ProductCard({ product }: { product: Product }) {
+  const { addItem } = useCart()
   const [error, setError] = useState(false)
   const imgSrc = `/images/products/${product.sku}.jpeg`
   const inStock = product.stock > 0
