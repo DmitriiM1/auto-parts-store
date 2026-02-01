@@ -7,6 +7,16 @@ Project demonstrates backend API development, database design, admin panel, auth
 
 # Backend: https://auto-parts-store-fa9b.onrender.com/ 
 
+> ⚠️ **Important notice**
+>  
+> The frontend and backend are deployed on Render (free tier).  
+> On the first visit, the backend may be asleep and take  
+> **10–20 seconds** to wake up.
+>  
+> If products do not appear immediately:
+> 1. Open the backend URL once  
+> 2. Refresh the frontend page
+
     Web Stack:
 
 Backend
