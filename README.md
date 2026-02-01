@@ -89,3 +89,6 @@ Categories
 Brands
 	•	GET /brands
 
+
+DATABASE: Prisma
+WakeUp server - UptimeRobot to wakeup backend (https://dashboard.uptimerobot.com/monitors)
